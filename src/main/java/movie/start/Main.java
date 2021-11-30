@@ -20,6 +20,11 @@ public class Main {
         System.out.println("====Cinema Service Start====");
         CinemaService cinemaService = new CinemaService(em);
         cinemaService.readUser(1L);
+
+        Long[] seats = {1L,2L};
+        cinemaService.createTicket(1L ,1L, seats);
+        cinemaService.cancelTicket(1L);
+
         System.out.println("====Cinema Service End====");
 
         em.close();

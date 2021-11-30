@@ -1,10 +1,7 @@
 package movie.start.service;
 
 import movie.start.DAO.*;
-import movie.start.domain.entity.Movie;
-import movie.start.domain.entity.Screen;
-import movie.start.domain.entity.Ticket;
-import movie.start.domain.entity.User;
+import movie.start.domain.entity.*;
 
 import javax.persistence.EntityManager;
 
@@ -66,13 +63,15 @@ public class CinemaService {
         System.out.println("3. 상영의 상영관과 좌석 조회");
     }
 
-    //4. 특정 상영의 특정좌석들을 예매하기(Users + Tickets + TicketSeat)
+    //4. 예매하기(Users + Tickets + TicketSeat)
     public void createTicket(Long screenId, Long userId, Long[] seatIds){
-        System.out.println("4. 상영의 좌석들 예매");
+        System.out.println("4. 예매하기");
+        //티켓 생성하기
         Ticket ticket = ticketDAO.createTicket(userId, screenId);
-        System.out.println("TicketId : "+ticket.getTicketId());
-        System.out.println("");
-
+        //티켓 좌석 생성하기
+        ticketSeatDAO.bulkCreateTicketSeat(ticket.getTicketId(), seatIds);
+        //결과 출력
+        this.readTicket(ticket.getTicketId());
     }
 
     //5. 사용자의 예매 내역 조회히기 (Users + Tickets + TicketSeat+ Screens + Theaters + Seats)
@@ -83,15 +82,53 @@ public class CinemaService {
     //6. 예매 취소하기 ( Tickets + TicketSeat+ Seats)
     public void cancelTicket(Long ticketId){
         System.out.println("6. 예매 취소하기");
+        Ticket ticket = ticketDAO.cancelTicket(ticketId);
+        this.readTicket(ticket.getTicketId());
     }
 
-    //7. 영화검색하기 (Movies + MovieWorker + Worker + Actor + Director)
+    //7. 예매티켓 상세조회
+    public void readTicket(Long ticketId){
+        System.out.println("7. 예매 티켓 상세 조회");
+        Ticket ticket = ticketDAO.readTicket(ticketId);
+        System.out.println("TicketId : "+ticket.getTicketId());
+        System.out.println("Status : "+ticket.getStatus());
+        System.out.println("UserName : "+ticket.getUser().getName());
+        System.out.println("Title : "+ticket.getScreen().getMovie().getTitle());
+        System.out.println("StartTime : "+ticket.getScreen().getStartTime());
+        System.out.println("EndTime : "+ticket.getScreen().getEndTime());
+        System.out.println("TheaterName : "+ticket.getScreen().getTheater().getName());
+        System.out.println("TheaterFloor : "+ticket.getScreen().getTheater().getFloor());
+        System.out.println("TicketSeats : ");
+        for(TicketSeat ticketSeat: ticket.getTicketSeats()){
+            System.out.println("    - SeatId : "+ticketSeat.getSeat().getSeatId());
+            System.out.println("    - Column : "+ticketSeat.getSeat().getSeatColumn());
+            System.out.println("    - Row : "+ticketSeat.getSeat().getSeatRow());
+            System.out.println("    - Status : "+ticketSeat.getSeat().getStatus());
+            System.out.println("    ---");
+        }
+        System.out.println("");
+    }
+
+    //8. 영화검색하기 (Movies + MovieWorker + Worker + Actor + Director)
     public void findMovie(){
-        System.out.println("7. 영화 검색하기");
+        System.out.println("8. 영화 검색하기");
     }
 
-    //8. 배우가 참여한 작품 조회하기 (Movies + MovieWorker + Worker + Actor + Director)
+    //9. 배우가 참여한 작품 조회하기 (Movies + MovieWorker + Worker + Actor + Director)
     public void findWorker(){
-        System.out.println("8. 배우가 참여한 작품 조회하기");
+        System.out.println("9. 배우가 참여한 작품 조회하기");
+    }
+
+    //11. 회원정보 수정
+    public void updateUser(User user){
+        System.out.println("11. 회원정보 수정");
+        userDAO.updateUser(user);
+        this.readUser(user.getUserId());
+    }
+
+    //12. 회원탈퇴
+    public void removeUser(Long userId){
+        System.out.println("12. 회원탈퇴");
+        userDAO.deleteUser(userId);
     }
 }

@@ -17,7 +17,7 @@ import javax.persistence.*;
 public class Seat {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer seatId;
+    private Long seatId;
 
     private Integer seatColumn;
     private Integer seatRow;

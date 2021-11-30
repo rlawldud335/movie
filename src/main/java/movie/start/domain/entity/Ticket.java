@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import movie.start.domain.enumType.SeatStatus;
 import movie.start.domain.enumType.TicketStatus;
 
 import javax.persistence.*;
@@ -37,6 +38,10 @@ public class Ticket {
     public void setStatus(TicketStatus status) {
         if(status.equals(TicketStatus.취소)){
             this.cancelTime = LocalDateTime.now();
+            //예약되어있던 ticketSeats 를 모두 가용상태로 바꾸기
+            for(TicketSeat ticketSeat: this.ticketSeats){
+                ticketSeat.getSeat().setStatus(SeatStatus.가용);
+            }
         }
         this.status = status;
     }

@@ -35,6 +35,18 @@ public class TicketDAO {
         }
     }
 
+    public Ticket cancelTicket(Long ticketId){
+        try{
+            tx.begin();
+            Ticket ticket = em.find(Ticket.class, ticketId);
+            ticket.setStatus(TicketStatus.취소);
+            tx.commit();
+            return ticket;
+        }catch (Exception e){
+            tx.rollback();
+            throw e;
+        }
+    }
 
     public Ticket updateTicket(Ticket ticket){
         try{
