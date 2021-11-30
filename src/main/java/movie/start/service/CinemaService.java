@@ -46,10 +46,10 @@ public class CinemaService {
     //1. 전체 상영 리스트 조회 (Screen + Movie)
     public void readScreens(){
         System.out.println("1. 전체 상영 목록 조회");
-        Screen[] screens = screenDAO.readAllScreen();
-        for(Screen scr : screens){
-            System.out.println(scr.toString());
-        }
+//        Screen[] screens = screenDAO.readAllScreen();
+//        for(Screen scr : screens){
+//            System.out.println(scr.toString());
+//        }
         System.out.println();
     }
 
