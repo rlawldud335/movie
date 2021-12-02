@@ -1,13 +1,9 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import movie.start.domain.enumType.MovieWorkerRoleType;
 
 import javax.persistence.*;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -48,5 +44,12 @@ public class MovieWorker {
         if (!worker.getMovieWorkers().contains(this)) {
             worker.getMovieWorkers().add(this);
         }
+    }
+
+    public String display() {
+        return "MovieWorker{" +
+                "movieWorkerId=" + movieWorkerId +
+                ", roleType=" + roleType +
+                '}';
     }
 }

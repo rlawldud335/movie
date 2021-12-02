@@ -1,14 +1,10 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -46,5 +42,13 @@ public class Theater {
         if (seat.getTheater() != this) {
             seat.setTheater(this);
         }
+    }
+
+    public String display() {
+        return "Theater{" +
+                "theaterId=" + theaterId +
+                ", name='" + name + '\'' +
+                ", floor=" + floor +
+                '}';
     }
 }

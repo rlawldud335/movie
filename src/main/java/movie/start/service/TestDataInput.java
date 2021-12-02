@@ -91,14 +91,14 @@ public class TestDataInput {
         screens[4]=screenDAO.createScreen(theater2,movies[0],LocalDateTime.parse("2021-11-30T15:00:00"));
         screens[5]=screenDAO.createScreen(theater2,movies[0],LocalDateTime.parse("2021-11-30T18:00:00"));
 
-//        //예매 생성
-//        Ticket ticket1 = ticketDAO.createTicket(user1.getUserId(),screens[0].getScreenId());
-//        Ticket ticket2 =ticketDAO.createTicket(user2.getUserId(),screens[0].getScreenId());
-//
-//        //예매한 티켓의 좌석 예매하기
-//        ticketSeatDAO.createTicketSeat(ticket1.getTicketId(), th1seats[0].getSeatId());
-//        ticketSeatDAO.createTicketSeat(ticket1.getTicketId(), th1seats[1].getSeatId());
-//        ticketSeatDAO.createTicketSeat(ticket2.getTicketId(), th1seats[2].getSeatId());
-//        ticketSeatDAO.createTicketSeat(ticket2.getTicketId(), th1seats[3].getSeatId());
+        //예매 생성
+        Ticket ticket1 = ticketDAO.createTicket(user1.getUserId(),screens[0].getScreenId());
+        Ticket ticket2 =ticketDAO.createTicket(user2.getUserId(),screens[0].getScreenId());
+
+        //예매한 티켓의 좌석 예매하기
+        ticketSeatDAO.createTicketSeat(ticket1.getTicketId(), th1seats[0].getSeatId());
+        ticketSeatDAO.createTicketSeat(ticket1.getTicketId(), th1seats[1].getSeatId());
+        ticketSeatDAO.createTicketSeat(ticket2.getTicketId(), th1seats[2].getSeatId());
+        ticketSeatDAO.createTicketSeat(ticket2.getTicketId(), th1seats[3].getSeatId());
     }
 }

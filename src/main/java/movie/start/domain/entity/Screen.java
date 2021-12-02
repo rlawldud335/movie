@@ -1,15 +1,11 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -57,5 +53,13 @@ public class Screen {
         if (!theater.getScreens().contains(this)) {
             theater.getScreens().add(this);
         }
+    }
+
+    public String display() {
+        return "Screen{" +
+                "screenId=" + screenId +
+                ", startTime=" + startTime +
+                ", endTime=" + endTime +
+                '}';
     }
 }

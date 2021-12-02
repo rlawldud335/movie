@@ -54,4 +54,14 @@ public class Movie extends BaseEntity {
             screen.setMovie(this);
         }
     }
+
+    public String display() {
+        return "Movie{" +
+                "movieId=" + movieId +
+                ", title='" + title + '\'' +
+                ", releaseTime=" + releaseTime +
+                ", genre=" + genre +
+                ", runningTime=" + runningTime +
+                '}';
+    }
 }

@@ -1,9 +1,6 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -39,5 +36,13 @@ public abstract class Worker {
         if (movieWorker.getWorker() != this) {
             movieWorker.setWorker(this);
         }
+    }
+
+    public String display() {
+        return "Worker{" +
+                "workerId=" + workerId +
+                ", name='" + name + '\'' +
+                ", birthday=" + birthday +
+                '}';
     }
 }

@@ -1,9 +1,6 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
@@ -30,5 +27,12 @@ public abstract class BaseEntity {
     @PreUpdate
     public void always(){
         this.editTime = LocalDateTime.now();
+    }
+
+    public String display() {
+        return "BaseEntity{" +
+                "createTime=" + createTime +
+                ", editTime=" + editTime +
+                '}';
     }
 }

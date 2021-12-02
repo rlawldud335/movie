@@ -35,7 +35,7 @@ public class TicketSeatDAO {
         }
     }
 
-    public TicketSeat[] bulkCreateTicketSeat(Long ticketId, Long[] seatIds){
+    public void bulkCreateTicketSeat(Long ticketId, Long[] seatIds){
         try{
             tx.begin();
             TicketSeat[] ticketSeats = new TicketSeat[seatIds.length];
@@ -49,45 +49,6 @@ public class TicketSeatDAO {
                 seat.setStatus(SeatStatus.불가용);
                 em.persist(ticketSeats[index++]);
             }
-            tx.commit();
-            return ticketSeats;
-        }catch (Exception e){
-            tx.rollback();
-            throw e;
-        }
-    }
-
-    public TicketSeat updateTicketSeat(TicketSeat ticketSeat){
-        try{
-            tx.begin();
-            TicketSeat findTicketSeat = em.find(TicketSeat.class, ticketSeat.getTicketSeatId());
-            findTicketSeat.setSeat(ticketSeat.getSeat());
-            findTicketSeat.setTicket(ticketSeat.getTicket());
-            tx.commit();
-            return findTicketSeat;
-        }catch (Exception e){
-            tx.rollback();
-            throw e;
-        }
-    }
-
-    public TicketSeat readTicketSeat(Long ticketSeatId){
-        try{
-            tx.begin();
-            TicketSeat ticketSeat = em.find(TicketSeat.class, ticketSeatId);
-            tx.commit();
-            return ticketSeat;
-        }catch (Exception e){
-            tx.rollback();
-            throw e;
-        }
-    }
-
-    public void deleteTicketSeat(Long ticketSeatId){
-        try{
-            tx.begin();
-            TicketSeat ticketSeat = em.find(TicketSeat.class, ticketSeatId);
-            em.remove(ticketSeat);
             tx.commit();
         }catch (Exception e){
             tx.rollback();

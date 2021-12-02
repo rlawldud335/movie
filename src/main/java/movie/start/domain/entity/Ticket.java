@@ -1,9 +1,6 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import movie.start.domain.enumType.SeatStatus;
 import movie.start.domain.enumType.TicketStatus;
 
@@ -82,5 +79,14 @@ public class Ticket {
         if (ticketSeat.getTicket() != this) {
             ticketSeat.setTicket(this);
         }
+    }
+
+    public String display() {
+        return "Ticket{" +
+                "ticketId=" + ticketId +
+                ", createTime=" + createTime +
+                ", status=" + status +
+                ", cancelTime=" + cancelTime +
+                '}';
     }
 }

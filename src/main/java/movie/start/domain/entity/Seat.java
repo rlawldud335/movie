@@ -1,13 +1,9 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import movie.start.domain.enumType.SeatStatus;
 
 import javax.persistence.*;
-
 @Getter
 @Setter
 @AllArgsConstructor
@@ -43,5 +39,14 @@ public class Seat {
         if (!theater.getSeats().contains(this)) {
             theater.getSeats().add(this);
         }
+    }
+
+    public String display() {
+        return "Seat{" +
+                "seatId=" + seatId +
+                ", seatColumn=" + seatColumn +
+                ", seatRow=" + seatRow +
+                ", status=" + status +
+                '}';
     }
 }

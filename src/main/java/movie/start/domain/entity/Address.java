@@ -1,9 +1,6 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.Embeddable;
 import java.util.Objects;
@@ -28,6 +25,14 @@ public class Address {
     @Override
     public int hashCode() {
         return Objects.hash(city, street, zipCode);
+    }
+
+    public String display() {
+        return "Address{" +
+                "city='" + city + '\'' +
+                ", street='" + street + '\'' +
+                ", zipCode='" + zipCode + '\'' +
+                '}';
     }
 }
 

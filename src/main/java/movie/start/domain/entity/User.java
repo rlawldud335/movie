@@ -1,10 +1,7 @@
 package movie.start.domain.entity;
 
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -41,5 +38,14 @@ public class User extends BaseEntity {
         if (ticket.getUser() != this) {
             ticket.setUser(this);
         }
+    }
+
+    public String display() {
+        return "User{" +
+                "userId=" + userId +
+                ", name='" + name + '\'' +
+                ", age=" + age +
+                ", address=" + address +
+                '}';
     }
 }

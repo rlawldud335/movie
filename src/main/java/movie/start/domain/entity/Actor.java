@@ -1,12 +1,10 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import java.time.LocalDate;
 
@@ -26,5 +24,12 @@ public class Actor extends Worker{
        super(name,birthday);
        this.height = height;
        this.instagramAddress = instagramAddress;
+    }
+
+    public String display() {
+        return "Actor{" +
+                "height=" + height +
+                ", instagramAddress='" + instagramAddress + '\'' +
+                '}';
     }
 }

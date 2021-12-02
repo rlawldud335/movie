@@ -27,17 +27,4 @@ public class TheaterDAO {
         }
     }
 
-    public Theater updateTheater(Theater theater){
-        try{
-            tx.begin();
-            Theater findTheater = em.find(Theater.class, theater.getTheaterId());
-            findTheater.setName(theater.getName());
-            findTheater.setFloor(theater.getFloor());
-            tx.commit();
-            return findTheater;
-        }catch (Exception e){
-            tx.rollback();
-            throw e;
-        }
-    }
 }

@@ -1,9 +1,6 @@
 package movie.start.domain.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -34,5 +31,11 @@ public class TicketSeat {
         if (!ticket.getTicketSeats().contains(this)) {
             ticket.getTicketSeats().add(this);
         }
+    }
+
+    public String display() {
+        return "TicketSeat{" +
+                "ticketSeatId=" + ticketSeatId +
+                '}';
     }
 }

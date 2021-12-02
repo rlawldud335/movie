@@ -1,12 +1,18 @@
 package movie.start.DAO;
 
+import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
+import movie.start.domain.DTO.ScreenDTO;
+import movie.start.domain.DTO.SeatDTO;
 import movie.start.domain.entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import static com.querydsl.core.group.GroupBy.groupBy;
+import static com.querydsl.core.group.GroupBy.list;
 
 public class ScreenDAO {
     EntityManager em;
@@ -35,53 +41,32 @@ public class ScreenDAO {
         }
     }
 
-    public void readAllScreen() {
-        try {
-            tx.begin();
-            JPAQueryFactory query = new JPAQueryFactory(em);
-            QScreen qScreen = new QScreen("s");
-            List<Screen> screens = query.selectFrom(qScreen)
-                    .fetch();
+    public List<ScreenDTO> readAllScreen() {
+        JPAQueryFactory query = new JPAQueryFactory(em);
+        QScreen qScreen = QScreen.screen;
+        QTheater qTheater = QTheater.theater;
+        QMovie qMovie = QMovie.movie;
+        QSeat qSeat = QSeat.seat;
 
-            System.out.println(screens.size());
-            for (Screen s: screens) {
-                System.out.println(s.getMovie().getTitle() + " " + s.getStartTime() + " " + s.getEndTime());
-//				System.out.println("	전체 좌석");
-//				for (Seat seat: s.getTheater().getSeats()) {
-//					System.out.println("	행: " + seat.getSeatRow() + " 열:" + seat.getSeatColumn());
-//				}
-//				System.out.println("	사용 가능 좌석");
-//				for (Ticket ticket: s.getTickets()) {
-//					for (TicketSeat ticketSeat: ticket.getTicketSeats()) {
-//						System.out.println("	행: " +ticketSeat.getSeat().getSeatRow() + " 열:" + ticketSeat.getSeat().getSeatColumn());
-//					}
-//				}
-            }
-            screens.stream().forEach(s ->
-                    System.out.println(s.getMovie().getTitle() + " " + s.getStartTime() + " " + s.getEndTime()));
-
-            tx.commit();
-        } catch (Exception e) {
-            tx.rollback();
-            System.out.println(e);
-            throw e;
-        }
+        List<ScreenDTO> screens = query
+                .from(qScreen)
+                .join(qScreen.movie, qMovie)
+                .join(qScreen.theater, qTheater)
+                .join(qTheater.seats, qSeat)
+                .transform(groupBy(qScreen.screenId).list(Projections.fields(
+                        ScreenDTO.class,
+                        qScreen.screenId,
+                        qScreen.startTime,
+                        qScreen.endTime,
+                        qMovie.title,
+                        qTheater.name,
+                        list(Projections.fields(SeatDTO.class,
+                                qSeat.seatId,
+                                qSeat.seatColumn,
+                                qSeat.seatRow,
+                                qSeat.status)).as("seats")
+                )));
+        return screens;
     }
 
-    public Screen updateScreen(Long screenId, Screen screen) {
-        try {
-            tx.begin();
-            Screen findScreen = em.find(Screen.class, screenId);
-            findScreen.setMovie(screen.getMovie());
-            findScreen.setStartTime(screen.getStartTime());
-            findScreen.setEndTime(screen.getEndTime());
-            findScreen.setTheater(screen.getTheater());
-            findScreen.setTickets(screen.getTickets());
-            tx.commit();
-            return screen;
-        } catch (Exception e) {
-            tx.rollback();
-            throw e;
-        }
-    }
 }
